@@ -16,7 +16,4 @@ ticketdata for test:
     "category": "Wonderful"
 }# TechScrumExercise
 # TechScrumExercise
-# TechScrumExercise
-# TechScrumExercise
-# TechScrumExercise
-# TechScrumExercise
+
