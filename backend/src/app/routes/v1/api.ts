@@ -16,6 +16,8 @@ router.get("/tickets",  ticketValidation.ticket, ticketGetAll);
 router.post("/ticket", ticketValidation.ticket, ticketStore);
 router.post("/login", loginValidation.user, login);
 router.post("/register", registerValidation.user, register);
+
+
 // route.get -> get data from server
 // route.post -> trasfer data to server
 // route.put -> replace all data in the db
