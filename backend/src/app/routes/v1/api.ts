@@ -18,6 +18,26 @@ router.post("/register", registerValidation.user, authController);
 
 export default router;
 
+// route.get -> get data from server
+// route.post -> trasfer data to server
+// route.put -> replace all data in the db
+// route.patch -> replace data partially
+// route.delete -> delete data
+
+// establish a ticket RESTFUL API:
+// get tickets from server - DB
+// route.get('/tickets', ticketIndex)
+// get ticket from server
+// route.get('/tickets/:id', ticketShow)
+// transfer ticket to server
+// route.post('/tickets', ticketStore)
+// replace ticket partially
+// router.put('/tickets/:id', ticketUpdate)
+// replace all tickets in the db
+// route.patch('/tickets', ticket?)
+// delete ticket
+// route.delete('/tickets', ticketDestroy)
+
 /* Notes: 
 - The API routes are defined in this file.
 - The routes are defined using the express.Router class.
