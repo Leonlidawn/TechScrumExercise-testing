@@ -1,9 +1,10 @@
 import { body } from 'express-validator';
 
 const user = [
-    body('name').isString(),//.isLength({ min: 3, max: 255 }),
-    body('email').isEmail(),
-    body('password').isString()
+    body("fname").isString(),
+    body("lname").isString(),
+    body("email").isString().isEmail(),
+    body("password").isString(),
 ];
 
 const registerValidation = { user };
