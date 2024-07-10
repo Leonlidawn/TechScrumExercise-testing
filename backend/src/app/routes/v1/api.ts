@@ -17,3 +17,16 @@ router.post("/login", loginValidation.user, authController);
 router.post("/register", registerValidation.user, authController);
 
 export default router;
+
+/* Notes: 
+- The API routes are defined in this file.
+- The routes are defined using the express.Router class.
+- The controller is used for handling the request and response. Formatting data for backend usage.
+- The validation is used for validating the request data. The first safety net for the backend.
+- GET and POST methods: GET can send data to server but will be recorded by the browser and easy to be hacked
+- POST is more secure and can send data to server without being recorded by the browser.
+In this project, we use POST method for login and register to secure the data.
+ticket is for practicing RESTful API.
+user is used for testing the route.
+
+*/
