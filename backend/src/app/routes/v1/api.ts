@@ -16,5 +16,24 @@ router.get("/tickets",  ticketValidation.ticket, ticketGetAll);
 router.post("/ticket", ticketValidation.ticket, ticketStore);
 router.post("/login", loginValidation.user, login);
 router.post("/register", registerValidation.user, register);
+// route.get -> get data from server
+// route.post -> trasfer data to server
+// route.put -> replace all data in the db
+// route.patch -> replace data partially
+// route.delete -> delete data
+
+// establish a ticket RESTFUL API:
+// get tickets from server - DB
+// route.get('/tickets', ticketIndex)
+// get ticket from server
+// route.get('/tickets/:id', ticketShow)
+// transfer ticket to server
+// route.post('/tickets', ticketStore)
+// replace ticket partially
+// router.put('/tickets/:id', ticketUpdate)
+// replace all tickets in the db
+// route.patch('/tickets', ticket?)
+// delete ticket
+// route.delete('/tickets', ticketDestroy)
 
 export default router;
