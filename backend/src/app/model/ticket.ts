@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId} from "mongoose";
 
 const ticketSchema = new mongoose.Schema(
     {
@@ -17,6 +17,17 @@ const ticketSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+
+const ObjectId = mongoose.Types.ObjectId;
+ticketSchema.statics.findById = async function (id: string) {
+    const objectId = new ObjectId(id);
+    if(!ObjectId.isValid(id)) {
+        return null;
+    }
+    const ticket = await this.findOne({ _id: objectId});
+    return ticket || null;
+};
+
 // performs a critical function in defining and exporting a Mongoose model in a Node.js application. 
 const Ticket = mongoose.model("Ticket", ticketSchema);
 export default Ticket;

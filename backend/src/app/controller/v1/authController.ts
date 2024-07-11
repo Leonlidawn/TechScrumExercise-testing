@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { loginService } from '../../services/v1/authService';
+//import { loginService } from '../../services/v1/authService';
 import { validationResult } from 'express-validator';
 
 export function authController(req: Request, res: Response) {
@@ -10,6 +10,6 @@ export function authController(req: Request, res: Response) {
         console.log(errorMessages);
         return res.status(422).json({ errors: error.array() });
     }
-    loginService();
+    //loginService();
     res.send("♡♡♡♡♡♡♡[controller]:loginController is called ♡♡♡♡♡♡♡");
 }
