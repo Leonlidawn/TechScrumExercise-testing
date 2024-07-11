@@ -1,28 +1,30 @@
 import { Router } from "express";
 import { userController } from "../../controller/v1/userController";
-import { ticketController} from "../../controller/v1/ticketController"; 
+import { ticketIndex, ticketShow, ticketStore, ticketUpdate, ticketDestroy } from "../../controller/v1/ticketController"; 
 import { authController } from "../../controller/v1/authController";
 import userValidation from "../../validations/v1/userValidation";
 import ticketValidation from "../../validations/v1/ticketValidation";
 import loginValidation  from "../../validations/v1/loginValidation";
-import registerValidation from "../../validations/v1/registerValidation";
 
 const router = Router();
 
 router.get("/user", userValidation.user, userController);
 router.post("/user", userValidation.user, userController);
-router.get("/ticket",  ticketValidation.ticket, ticketController);
-router.post("/ticket", ticketValidation.ticket, ticketController);
+
+router.get("/tickets",  ticketValidation.ticket, ticketIndex);
+router.get("/ticket/:id", ticketValidation.ticket, ticketShow);
+router.post("/ticket", ticketValidation.ticket, ticketStore);
+router.put("/ticket/:id", ticketValidation.ticket, ticketUpdate);
+router.delete("/tickets", ticketValidation.ticket, ticketDestroy);
+
 router.post("/login", loginValidation.user, authController);
-router.post("/register", registerValidation.user, authController);
+router.post("/register", loginValidation.user, authController);
 
 export default router;
 
-// route.get -> get data from server
-// route.post -> trasfer data to server
-// route.put -> replace all data in the db
-// route.patch -> replace data partially
-// route.delete -> delete data
+//TODO: COMPLETE THE RESTFUL API ticket routes
+//TODO: COMPLETE register, login, logout backend
+//TODO: COMPLETE frontend for register, login, logout
 
 // establish a ticket RESTFUL API:
 // get tickets from server - DB
