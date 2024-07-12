@@ -16,7 +16,7 @@ export async function registerUser(req: Request) {
     const validationToken = jwt.sign({ id: newUser.id }, config.secret);
     newUser.token = validationToken;
     await newUser.save();
-    console.log(newUser);
+    console.log("newUser Registed-->", newUser);
     return newUser;
 }
 /* Login Steps:

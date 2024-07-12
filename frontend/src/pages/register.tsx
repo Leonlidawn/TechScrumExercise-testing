@@ -10,8 +10,20 @@ function Register() {
             password: ""
     });
 
-    function handleChange() {
+    function handleChange(event: any) {
+        const { name, value } = event.target;
+        setUser(prevValue => {
+            return {
+            ...prevValue,
+            [name]: value
+            };
+        });
+    }
 
+    async function  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        // Event Handling: event.preventDefault() is crucial for handling form submissions in a single-page application (SPA) context, where you want to avoid full page reloads.
+        event.preventDefault();
+        await axios.post('http://localhost:8000/api/v1/register', user);
     }
 
     return (
@@ -20,6 +32,7 @@ function Register() {
             <h1>
                 Hello {user.name}
             </h1>
+            <p>{user.email}</p>
             <form>
                 <input 
                     name="name"
