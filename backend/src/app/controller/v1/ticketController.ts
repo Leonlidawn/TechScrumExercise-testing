@@ -6,14 +6,14 @@ import mongoose from 'mongoose';
 import Ticket from "../../model/ticket";
 
 // TODO: I think this part can be simplified.
-export function ticketIndex (req: Request, res: Response) {
+export async function ticketIndex (req: Request, res: Response) {
     const error = validationResult(req);
     if(!error.isEmpty()) {
         const errorMessages = error.array().map(error => `${error.param}: ${error.msg}`);
         console.log(errorMessages);
         return res.status(422).json({ errors: error.array() });
     }
-    indexTicket(); // it doen't have anything yet
+    const tickets = await indexTicket();
     res.send("[Ticket Controller]: ticketIndex is called.");
 }
 
@@ -84,6 +84,7 @@ export function ticketDestroy (req: Request, res: Response) {
         console.log(errorMessages);
         return res.status(422).json({ errors: error.array() });
     }
-    res.send("[Ticket Controller]: ticketDestroy is called.");
-    destroyTicket();
+    const result = destroyTicket();
+    res.send(result);
+
 }

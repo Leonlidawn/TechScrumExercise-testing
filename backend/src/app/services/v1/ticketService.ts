@@ -1,8 +1,24 @@
 import Ticket from '../../model/ticket';
 import { TicketData } from '../../types/Ticket';
 
-export function indexTicket () {
-    console.log("[Ticket Service]: new Ticket is saved to the database.")
+export async function indexTicket () {
+    // QUESTION: This is not working why???????????
+    // try {
+    //     const tickets = await Ticket.find();
+    //     console.log("tickets----> ", tickets);
+    //     return tickets;
+    // } catch (error: any) {
+    //     console.log("error----> ", error.message);
+    // }
+    try {
+      const cursor = Ticket.find().cursor();
+  
+      for (let ticket = await cursor.next(); ticket != null; ticket = await cursor.next()) {
+        console.log("ticket----> ", ticket);
+      }
+    } catch (error: any) {
+      console.log("error----> ", error.message);
+    }
 }
 
 export async function showTicket (id: string, data: TicketData) {
@@ -65,4 +81,11 @@ export async function updateTicket (id: string, data: TicketData) {
       }
 }
 
-export function destroyTicket () {}
+export async function destroyTicket () {
+    try {
+      const ticket = await Ticket.deleteMany({});
+      return ticket;
+    } catch (error: any) {
+      console.log("error----> ", error.message);
+    }
+}
