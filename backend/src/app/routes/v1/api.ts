@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { userController } from "../../controller/v1/userController";
 import { ticketIndex, ticketShow, ticketStore, ticketUpdate, ticketDestroy } from "../../controller/v1/ticketController"; 
-import { authController } from "../../controller/v1/authController";
+import { register, login, logout } from "../../controller/v1/authController";
 import userValidation from "../../validations/v1/userValidation";
 import ticketValidation from "../../validations/v1/ticketValidation";
 import loginValidation  from "../../validations/v1/loginValidation";
@@ -17,8 +17,9 @@ router.post("/ticket", ticketValidation.ticket, ticketStore);
 router.put("/ticket/:id", ticketValidation.ticket, ticketUpdate);
 router.delete("/tickets", ticketValidation.ticket, ticketDestroy);
 
-router.post("/login", loginValidation.user, authController);
-router.post("/register", loginValidation.user, authController);
+router.post("/login", loginValidation.user, login);
+router.post("/register", loginValidation.user, register);
+router.post("/logout", logout);
 
 export default router;
 
