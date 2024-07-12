@@ -5,7 +5,25 @@ export function indexTicket () {
     console.log("[Ticket Service]: new Ticket is saved to the database.")
 }
 
-export function showTicket () {}
+export async function showTicket (id: string, data: TicketData) {
+  try {
+    const ticketToShow = await Ticket.findById(id);
+    if(!ticketToShow) {
+      return {
+        success: false,
+        message: 'Ticket not found'
+      };
+    }
+    return {
+        success: true,
+        message: 'Ticket found',
+        ticketToShow
+    }
+    console.log("ticketToShow----> ", ticketToShow);
+  } catch (error: any) {
+    console.log("error----> ", error.message);
+  }
+}
 
 export async function storeTicket (data: TicketData) {
     const newTicket = new Ticket(data);
@@ -30,7 +48,6 @@ export async function updateTicket (id: string, data: TicketData) {
             message: 'Ticket not found'
           };
         }
-    
         // Update the ticket with the new data
         Object.assign(ticket, data);
         await ticket.save();

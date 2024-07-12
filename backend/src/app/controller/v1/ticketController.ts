@@ -13,11 +13,11 @@ export function ticketIndex (req: Request, res: Response) {
         console.log(errorMessages);
         return res.status(422).json({ errors: error.array() });
     }
-    indexTicket();
+    indexTicket(); // it doen't have anything yet
     res.send("[Ticket Controller]: ticketIndex is called.");
 }
 
-export function ticketShow (req: Request, res: Response) {
+export async function ticketShow (req: Request, res: Response) {
     const error = validationResult(req);
     if(!error.isEmpty()) {
         const errorMessages = error.array().map(error => `${error.param}: ${error.msg}`);
@@ -25,7 +25,17 @@ export function ticketShow (req: Request, res: Response) {
         return res.status(422).json({ errors: error.array() });
     }
     res.send("[Ticket Controller]: ticketShow is called.");
-    showTicket();
+    const { id } = req.params;
+    try {
+        const result = await showTicket(id, req.body);
+        if (result && result.success) {
+          return res.status(200).json({ message: result.message, ticket: result.ticketToShow });
+        } else {
+          return res.status(404).json({ message: result ? result.message : 'Ticket not found'});
+        }
+    } catch (error:any) {
+        return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
 }
 
 export function ticketStore (req: Request, res: Response) {
@@ -55,7 +65,6 @@ export async function ticketUpdate (req: Request, res: Response) {
         return res.status(422).json({ errors: error.array() });
     }
     const { id } = req.params;
-
     try {
         const result = await updateTicket(id, req.body);
         if (result.success) {
@@ -63,9 +72,9 @@ export async function ticketUpdate (req: Request, res: Response) {
         } else {
           return res.status(404).json({ message: result.message });
         }
-      } catch (error:any) {
+    } catch (error:any) {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
-      }
+    }
 }
 
 export function ticketDestroy (req: Request, res: Response) {
