@@ -1,18 +1,32 @@
 import { Request, Response } from "express";
+<<<<<<< HEAD
 import {  indexTicket, showTicket, storeTicket, updateTicket, destroyTicket } from "../../services/v1/ticketService";
+=======
+import { ticketService, ticketCreation, getAllTickets } from "../../services/v1/ticketService";
+>>>>>>> c087ff499e6c90edc0a297b01dd76a0299f8d877
 import { validationResult } from "express-validator"; 
 import { TicketData } from '../../types/Ticket';
 import mongoose from 'mongoose';
 import Ticket from "../../model/ticket";
 
+<<<<<<< HEAD
 // TODO: I think this part can be simplified.
 export async function ticketIndex (req: Request, res: Response) {
+=======
+// ticket index is get one ticket
+// 1. validation error check
+// 2. if error, log and return the error
+// 3. if mo error, continue running coresponded service 
+export function ticketIndex (req: Request, res: Response) {
+    //console.log(req.body);
+>>>>>>> c087ff499e6c90edc0a297b01dd76a0299f8d877
     const error = validationResult(req);
     if(!error.isEmpty()) {
         const errorMessages = error.array().map(error => `${error.param}: ${error.msg}`);
         console.log(errorMessages);
         return res.status(422).json({ errors: error.array() });
     }
+<<<<<<< HEAD
     const tickets = await indexTicket();
     res.send("[Ticket Controller]: ticketIndex is called.");
 }
@@ -86,5 +100,37 @@ export function ticketDestroy (req: Request, res: Response) {
     }
     const result = destroyTicket();
     res.send(result);
+=======
+    ticketService();
+    res.send("♡♡♡♡♡♡♡[controller]:ticketIndex ♡♡♡♡♡♡♡");
+} 
+// QUESTION: does it need to be changed to async await function
+// QUESTION: if the validation is the same, can they share the validation?
+
+//ticket store is create a ticket
+export function ticketStore(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).json({ error: errors.array()});
+    }
+    ticketCreation(req.body);
+    res.send("♡♡♡♡♡♡♡[controller]:ticketStore ♡♡♡♡♡♡♡")
+}
+
+//ticket retrive all 
+export async function ticketGetAll(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).json({error: errors.array()})
+    }
+    try {
+        const tickets =  await getAllTickets();
+        res.send(tickets);
+    } catch(e) {
+        res.status(500).send({e});
+    }
+>>>>>>> c087ff499e6c90edc0a297b01dd76a0299f8d877
 
 }

@@ -8,7 +8,7 @@ import config from "../../app/config/app"
     IUser: Defines the structure of a user document, including fields and methods.
     IUserModel: Defines static methods for the user model.
 */
-interface IUser extends Document{name: string, email: string, password: string, token: string, generateJWTToken: ()=>Promise<string>};
+interface IUser extends Document{fname: string, lname: string, email: string, password: string, token: string, generateJWTToken: ()=>Promise<string>};
 interface IUserModel extends mongoose.Model<IUser> {
     findByCredentials: (email: string, password: string) => Promise<IUser>;
   }
@@ -20,7 +20,11 @@ interface IUserModel extends mongoose.Model<IUser> {
 */
 const userSchema = new mongoose.Schema <IUser>(
     {
-        name: {
+        fname: {
+            type: String,
+            require: true
+        },
+        lname: {
             type: String,
             require: true
         },

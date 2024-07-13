@@ -7,5 +7,5 @@ const user = [
     body("password").isString(),
 ];
 
-const loginValidation = { user };
-export default loginValidation;
+const registerValidation = { user };
+export default registerValidation;
