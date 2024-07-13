@@ -5,21 +5,9 @@ import User from '../../model/user'; // import user model, captical letter for n
 import config from '../../config/app'; // the secret key is stored here
 
 export async function registerUser(req: Request) {
-<<<<<<< HEAD
     //const email = req.body.email;
     const { email = null} = req.body // QUESTION: Why does it need  =null ?
     const user = await User.findOne(email);
-=======
-    const {email=null} = req.body;
-    //const {email} = req.body.email;
-    if (!email) {
-        //console.log("-------->>>", email );
-        throw new Error('Email is required');
-    }
-    //console.log("--------------->",email);
-    // Uses User.findOne to check if a user with the given email already exists in the database.
-    const user = await User.findOne({email});
->>>>>>> c087ff499e6c90edc0a297b01dd76a0299f8d877
     // if (user) {
     //     return { error: 'User already exists' };
     // }
