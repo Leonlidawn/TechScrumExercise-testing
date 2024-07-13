@@ -5,6 +5,11 @@ import User from '../../model/user'; // import user model, captical letter for n
 import config from '../../config/app'; // the secret key is stored here
 
 export async function registerUser(req: Request) {
+<<<<<<< HEAD
+    //const email = req.body.email;
+    const { email = null} = req.body // QUESTION: Why does it need  =null ?
+    const user = await User.findOne(email);
+=======
     const {email=null} = req.body;
     //const {email} = req.body.email;
     if (!email) {
@@ -14,6 +19,7 @@ export async function registerUser(req: Request) {
     //console.log("--------------->",email);
     // Uses User.findOne to check if a user with the given email already exists in the database.
     const user = await User.findOne({email});
+>>>>>>> c087ff499e6c90edc0a297b01dd76a0299f8d877
     // if (user) {
     //     return { error: 'User already exists' };
     // }
@@ -27,8 +33,45 @@ export async function registerUser(req: Request) {
      // Assigns the generated validation token to the token field of the new user.
     newUser.token = validationToken;
     await newUser.save();
-    return newUser
+    console.log("newUser Registed-->", newUser);
+    return newUser;
 }
+/* Login Steps:
+1. Find the user by email and password. It comes from the request body.
+2. validate password in model using bcrypt.compare()
+2. If the user is not found, return an error message.
+3. If the user is found, generate a JWT token for the user.
+4. Return the user and the token in the response.
+5. Back to the controller. and compare
+*/
+
+export async function loginUser(req: Request) {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await User.findByCredentials(email, password);
+    if (!user) {
+        return { error: 'Invalid login credentials' };
+    }
+    const token = await user.generateJWTToken(); // this function is defined in the model
+    return { user, ...{token: token } };
+}
+/* Log out steps:
+1. Get the JWT token
+2. Decode the user ID
+3. Reset token field to empty string
+4. User.save()
+*/
+export async function logoutUser(req: Request) {
+    const decode: any = jwt.verify(req.headers.authorization as string, config.secret);
+    const userId = decode.id;
+    const user = await User.findById(userId);
+    if(!user) {
+        throw new Error('User not found');
+    }
+    user.token = '';
+    user.save();
+}
+// TODO: Clarify the steps to login and logout
 
 /*
     new User(req.body):
